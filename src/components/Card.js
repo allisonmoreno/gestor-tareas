@@ -8,12 +8,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
 import CardHeader from '@material-ui/core/CardHeader';
-
+import ProgressStepper from './ProgressStepper';
 
 const styles = {
-  card: {
-    minWidth: 275,
-  },
   title: {
     fontSize: 14,
   },
@@ -67,7 +64,7 @@ function SimpleCard(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        
+        <ProgressStepper />
       </CardActions>
     </Card>
   );

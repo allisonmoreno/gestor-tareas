@@ -6,6 +6,14 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import Button from '@material-ui/core/Button';
+
 
 const styles = {
   mainTitle: {
@@ -23,6 +31,18 @@ const styles = {
 class LaneHeader extends React.Component {
   state = {
     anchorEl: null,
+    openModal: false,
+  };
+
+
+  handleModalClose = () => {
+    this.setState({ openModal: false });
+  };
+
+  handleLaneDelete = () => {
+    this.setState({ openModal: false });
+    //TODO
+    this.props.actions.removeLane({laneId: this.props.id})
   };
 
   handleClick = event => {
@@ -33,20 +53,22 @@ class LaneHeader extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleRemove = () => {
+    this.setState({ openModal: true });
+  };
+
   render() {
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
     const { classes } = this.props;
-
-
     return (
       <div className="LaneHeader">
       {console.log(this)}
       <CardHeader
-      classes={{
-          title: classes.mainTitle,
-          subheader: classes.mainSubtitle
-        }}
+        classes={{
+            title: classes.mainTitle,
+            subheader: classes.mainSubtitle
+          }}
           action={
             <div>
               <IconButton
@@ -69,7 +91,7 @@ class LaneHeader extends React.Component {
                   },
                 }}
               >
-                  <MenuItem onClick={this.handleClose}>
+                  <MenuItem onClick={this.handleRemove}>
                     Eliminar
                   </MenuItem>
               </Menu>
@@ -81,6 +103,27 @@ class LaneHeader extends React.Component {
             padding: 0,
           }}
         />
+        <Dialog
+          fullScreen={false}
+          open={this.state.openModal}
+          onClose={this.handleModalClose}
+          aria-labelledby="responsive-dialog-title"
+        >
+          <DialogTitle id="responsive-dialog-title">¿Realmente deseas eliminar esta lista?</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Al hacerlo también estarás eliminando las tareas que esten dentro de ella, esta acción no se puede deshacer.
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleModalClose} color="primary">
+              Cancelar
+            </Button>
+            <Button onClick={this.handleLaneDelete} color="primary" autoFocus>
+              Aceptar
+            </Button>
+          </DialogActions>
+        </Dialog>
         
       </div>
     );

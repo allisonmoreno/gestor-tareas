@@ -25,7 +25,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import LaneHeader from '../components/LaneHeader';
-
+import NewCard from '../components/NewCard';
+import NewLane from '../components/NewLane';
 
 const data = {
   lanes: [
@@ -142,6 +143,8 @@ class Index extends React.Component {
           addCardLink={<CustomButton />}
           customLaneHeader={<LaneHeader />}
           addLaneTitle="AGREGAR"
+          newCardTemplate={<NewCard />}
+          newLaneTemplate={<NewLane />}
           >
             <Card />
 
