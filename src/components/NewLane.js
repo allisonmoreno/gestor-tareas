@@ -17,7 +17,7 @@ import TextField from '@material-ui/core/TextField';
 
 const styles = {
   card: {
-    maxWidth: '250px',
+    maxWidth: '320px',
   },
   title: {
     fontSize: 14,
@@ -37,27 +37,28 @@ const styles = {
   },
   textField: {
     width: '100%',
+    margin: 0
   },
 };
 
 
 class NewLane extends React.Component {
-  
-
    state = {
     title: '',
   };
 
-
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+  };
+
+   handleAddClick = event => {
+    this.props.onAdd({title: this.state.title})
   };
   
   render() {
    const { classes } = this.props;
   return (
     <Card className={classes.card}>
-      {console.log(this.props)}
       <CardContent>
       <TextField
           id="title"
@@ -72,7 +73,7 @@ class NewLane extends React.Component {
         <Button size="small" color="primary" onClick={this.props.onCancel}>
           Cancelar
         </Button>
-        <Button size="small" color="primary" onClick={this.props.onAdd}>
+        <Button size="small" color="primary" onClick={this.handleAddClick}>
           Agregar
         </Button>
       </CardActions>
