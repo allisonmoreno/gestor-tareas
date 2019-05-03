@@ -47,8 +47,8 @@ function SimpleCard(props) {
               R
             </Avatar>
           }
-          title={props.usuario ? props.usuario.nombre : "Sin Asignar"}
-          subheader={props.usuario ? props.usuario.puesto : ""}
+          title={props.user ? props.user.name : "Sin Asignar"}
+          subheader={props.user ? props.user.title : ""}
         />
         <Typography className={classes.pos}  variant="h5" component="h2">
           {props.title}

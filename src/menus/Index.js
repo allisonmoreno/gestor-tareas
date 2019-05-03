@@ -35,8 +35,8 @@ const data = {
       title: 'Por Realizar',
       label: '',
       cards: [
-        {id: 'Card1', title: 'Diseño', description: 'Realizar todo lo relacionado con el front ', label: '6 hrs', usuario: {id: 1, nombre: 'Allison Roberto Moreno Preciado', puesto: 'Desarrollador Web'}},
-        {id: 'Card2', title: 'Servicios', description: 'Hacer el back', label: '5 hrs', usuario: {id: 1, nombre: 'Allison Roberto Moreno Preciado', puesto: 'Desarrollador Web'}}
+        {id: 'Card1', title: 'Diseño', description: 'Realizar todo lo relacionado con el front ', label: '6 hrs', user: {id: 1, name: 'Allison Roberto Moreno Preciado', title: 'Desarrollador Web'}},
+        {id: 'Card2', title: 'Servicios', description: 'Hacer el back', label: '5 hrs', user: {id: 1, name: 'Allison Roberto Moreno Preciado', title: 'Desarrollador Web'}}
       ]
     },
     {
@@ -113,8 +113,28 @@ class Index extends React.Component {
     window.location.href= "/"
   };
 
+  onDragEnd = (cardId, sourceLandId, targetLaneId) => {
+    console.log('Calling onDragENd', cardId, sourceLandId, targetLaneId)
+
+    const options = {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      data: JSON.stringify({cardId: cardId, laneId: targetLaneId}),
+      url: 'http://localhost/tareas/api/setCardLane'
+    };
+
+    axios(options).then(res => {
+      //console.log(res);
+      if (!res.data.success){
+        this.setState({ modalProcess: false});
+        this.props.enqueueSnackbar(res.data.message);
+      }
+
+        
+    });
+  }
   componentDidMount() {
-    fetch("http://localhost/tareas/api/getTareas")
+    fetch("http://localhost/tareas/api/getLanes")
       .then(res => res.json())
       .then(
         (result) => {
@@ -137,11 +157,16 @@ class Index extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { error, isLoaded, items } = this.state;
+     const { error, isLoaded, items } = this.state;
+    if (error) {
+      return <div>Error: {error.message}</div>;
+    } else if (!isLoaded) {
+      return <div>Cargando Datos...</div>;
+    } else {
     
     return (<React.Fragment>
         <Board 
-          data={data} 
+          data={this.state.items} 
           customCardLayout 
           editable
           canAddLanes
@@ -153,11 +178,14 @@ class Index extends React.Component {
           addLaneTitle="AGREGAR"
           newCardTemplate={<NewCard />}
           newLaneTemplate={<NewLane />}
+          onCardClick={this.onCardClick}
+          handleDragEnd={this.onDragEnd}
           >
             <Card />
 
         </Board>
     </React.Fragment>)
+  }
   }
 }
 

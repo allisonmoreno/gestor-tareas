@@ -63,7 +63,6 @@ class LaneHeader extends React.Component {
     const { classes } = this.props;
     return (
       <div className="LaneHeader">
-      {console.log(this)}
       <CardHeader
         classes={{
             title: classes.mainTitle,
