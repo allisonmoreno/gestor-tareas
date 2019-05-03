@@ -49,7 +49,8 @@ class NewCard extends React.Component {
     date1: new Date(),
     date2: new Date(),
     title: '',
-    descripcion: ''
+    description: '',
+    label: ''
   };
 
   handleDate1Change = date => {
@@ -62,6 +63,10 @@ class NewCard extends React.Component {
 
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+  };
+
+  handleAddClick = event => {
+    this.props.onAdd(this.state)
   };
   
   render() {
@@ -77,7 +82,16 @@ class NewCard extends React.Component {
           value={this.state.title}
           onChange={this.handleChange('title')}
           margin="normal"
-        /> <br/>
+        />
+
+        <TextField
+          id="label"
+          label="Etiqueta"
+          className={classes.textField}
+          value={this.state.label}
+          onChange={this.handleChange('label')}
+          margin="normal"
+        />
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
          <DatePicker
             margin="normal"
@@ -104,8 +118,8 @@ class NewCard extends React.Component {
           label="Descripcion"
           multiline
           rowsMax="4"
-          value={this.state.multiline}
-          onChange={this.handleChange('descripcion')}
+          value={this.state.description}
+          onChange={this.handleChange('description')}
           className={classes.textField}
           margin="normal"
         />
@@ -114,7 +128,7 @@ class NewCard extends React.Component {
         <Button size="small" color="primary" onClick={this.props.onCancel}>
           Cancelar
         </Button>
-        <Button size="small" color="primary" onClick={this.props.onAdd}>
+        <Button size="small" color="primary" onClick={this.handleAddClick}>
           Agregar
         </Button>
       </CardActions>

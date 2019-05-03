@@ -93,13 +93,21 @@ class Index extends React.Component {
     error: null,
     isLoaded: false,
     items: [],
-    open: false,
+    modalOpen: false,
     menuOpen: true
   };
 
 
   onLaneAdd = () => {
+    console.log('onLaneAdd');
   };
+  
+  onCardClick = (cardId, metadata, laneId) => {
+      console.log("onCardClick",cardId, metadata, laneId);
+            this.setState((prevState) => {
+                 return {modalOpen: !prevState.modalOpen}
+            });
+          };
 
    handleCancel = () => {
     window.location.href= "/"
