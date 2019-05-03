@@ -1,4 +1,8 @@
-Aplicación capaz de gestionar tareas con una interfaz inspirada en trello
+Aplicación capaz de gestionar tareas con una interfaz inspirada en trello.
+
+Backend: Codeigniter
+Base de datos: MySQL
+Frontend: React JS
 
 ### Instalación de dependencias
 
@@ -8,3 +12,4 @@ Aplicación capaz de gestionar tareas con una interfaz inspirada en trello
 * npm install notistack
 * npm install axios
 * npm install styled-components --save
+* npm i @date-io/date-fns date-fns@next
